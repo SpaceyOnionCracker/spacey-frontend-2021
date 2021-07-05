@@ -37,21 +37,6 @@ export class AuthService {
     private tokenStorageService: TokenStorageService
   ) {}
 
-  // @ts-ignore
-  handleError(error) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-      alert('Сталася помилка. Перезавантажте сайт');
-      this.logOut();
-    } else {
-      console.error(
-        `Сталася помилка сервера з кодом ${error.status}, ` +
-          ` текст: ${error.error}`
-      );
-    }
-    return throwError('some shit');
-  }
-
   logOut(): void {
     this.tokenStorageService.signOut();
     this.isUnauthorizedUser = true;

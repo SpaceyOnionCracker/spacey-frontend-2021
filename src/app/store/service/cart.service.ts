@@ -100,12 +100,10 @@ export class CartService {
       ) {
         product.amount += productToAdd.amount;
         isInCart = true;
-        console.log('item is already in cart, amount increased');
       }
     }
     if (!isInCart) {
       cart.push(productToAdd);
-      console.log('item has been added to local shopping cart');
     }
     this.saveUnauthorizedCart(cart);
     console.log(cart.toString());
@@ -120,10 +118,8 @@ export class CartService {
       ) {
         if (product.amount == 1) {
           cart.splice(index, 1);
-          console.log('item found in cart, amount decreased');
         } else {
           product.amount -= productToRemove.amount;
-          console.log('item has been removed from local shopping cart');
         }
       }
     });
@@ -132,9 +128,6 @@ export class CartService {
 
   getUnauthorizedCart(): EditCartModel[] {
     const result = JSON.parse(<string>sessionStorage.getItem(this.CART_KEY));
-    console.log(
-      'cart for unauthorized user successfully parsed from session storage'
-    );
     if (result == null) {
       return [];
     }
@@ -143,9 +136,6 @@ export class CartService {
 
   saveUnauthorizedCart(cart: EditCartModel[]): void {
     sessionStorage.setItem(this.CART_KEY, JSON.stringify(cart));
-    console.log(
-      'cart for unauthorized user successfully saved to session storage'
-    );
   }
 
   countTotalPrice(products: ProductForCartModel[]): number {
@@ -163,7 +153,6 @@ export class CartService {
   checkAvailability(products: ProductForCartModel[]): boolean {
     let unavailableCounter = 0;
     for (let product of products) {
-      console.log(product.id);
       unavailableCounter += product.unavailableAmount;
     }
     return unavailableCounter === 0;

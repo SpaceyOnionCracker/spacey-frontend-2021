@@ -7,7 +7,7 @@ import { EmployeeProfileModel } from '../models/employee-profile.model';
 import { UserProfile } from '../models/user-profile.model';
 import { EditUserProfile } from '../models/edit-user-profile.model';
 import { ChangePassword } from '../models/change-password.model';
-import { TokenStorageService } from './auth/token-storage.service';
+import { AuthService } from './auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,23 +20,7 @@ export class ProfileService {
   private changePasswordURL = this.hostURL + '/change-password-save';
   private httpOptions = { observe: 'response' as const };
 
-  constructor(
-    private http: HttpClient,
-    private storageService: TokenStorageService
-  ) {}
-  //
-  // handleError(error) {
-  //   if (error.error instanceof ErrorEvent) {
-  //     console.error('An error occurred:', error.error.message);
-  //     alert('Сталася помилка. Перезавантажте сайт');
-  //   } else {
-  //     console.error(
-  //       `Сталася помилка сервера з кодом ${error.status}, ` +
-  //         ` текст: ${error.error}`
-  //     );
-  //   }
-  //   return throwError('some shit');
-  // }
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getEmployeeInfo(): Observable<HttpResponse<EmployeeProfileModel>> {
     return this.http.get<EmployeeProfileModel>(
@@ -58,6 +42,6 @@ export class ProfileService {
   }
 
   logOut() {
-    this.storageService.signOut();
+    this.authService.logOut();
   }
 }

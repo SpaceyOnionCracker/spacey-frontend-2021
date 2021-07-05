@@ -16,15 +16,20 @@ import { RecoverPassword } from '../../models/recover-password.model';
 export class AuthService {
   private hostURL = environment.url + endpointUrls.apiPrefix;
 
-  private registerURL = this.hostURL + '/register';
   private loginURL = this.hostURL + '/login';
+  private registerURL = this.hostURL + '/register';
   private confirmURL = this.hostURL + '/registration_confirm';
-  private resendConfirmURL = this.hostURL + '/resend_registration_token';
-  private recoverPasswordURL = this.hostURL + '/reset-password-save';
   private emailForRecoverURL = this.hostURL + '/reset-password';
   private createPasswordURL = this.hostURL + '/create-password-save';
+  private recoverPasswordURL = this.hostURL + '/reset-password-save';
+  private resendConfirmURL = this.hostURL + '/resend_registration_token';
 
   private httpOptions = { observe: 'response' as const };
+
+  isUnauthorizedUser = true;
+  isCourier = false;
+  isAuthorizedUser = false;
+  isProductManager = false;
 
   constructor(
     private http: HttpClient,
@@ -49,7 +54,10 @@ export class AuthService {
 
   logOut(): void {
     this.tokenStorageService.signOut();
-    this.router.navigate(['/']);
+    this.isUnauthorizedUser = true;
+    this.isCourier = false;
+    this.isAuthorizedUser = false;
+    this.isProductManager = false;
   }
 
   isAuthorised(): boolean {
@@ -72,6 +80,27 @@ export class AuthService {
       loginData,
       this.httpOptions
     );
+  }
+
+  setRole(): void {
+    const userRole = this.tokenStorageService.getRole();
+    switch (userRole) {
+      case null:
+        this.isUnauthorizedUser = true;
+        break;
+      case 'USER':
+        this.isAuthorizedUser = true;
+        this.isUnauthorizedUser = false;
+        break;
+      case 'COURIER':
+        this.isCourier = true;
+        this.isUnauthorizedUser = false;
+        break;
+      case 'PRODUCT_MANAGER':
+        this.isProductManager = true;
+        this.isUnauthorizedUser = false;
+        break;
+    }
   }
 
   confirmRegistration(token: string): Observable<HttpResponse<any>> {

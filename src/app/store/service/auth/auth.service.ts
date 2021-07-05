@@ -44,7 +44,7 @@ export class AuthService {
     this.isCourier = false;
     this.isAuthorizedUser = false;
     this.isProductManager = false;
-    this.isAdmin = true;
+    this.isAdmin = false;
   }
 
   isAuthorised(): boolean {

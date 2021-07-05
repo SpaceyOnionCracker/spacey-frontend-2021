@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpResponse,
-} from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { ProductForCartModel } from '../models/product-for-cart.model';
 import { endpointUrls } from '../../../environments/endpoint-routes-manager';
 import { environment } from '../../../environments/environment';
-import { catchError, tap } from 'rxjs/operators';
 import { EditCartModel } from '../models/edit-cart.model';
 import { TokenStorageService } from './auth/token-storage.service';
 import { sessionStorageKeys } from '../../../environments/session-storage-manager';
@@ -38,56 +33,32 @@ export class CartService {
     private tokenStorageService: TokenStorageService
   ) {}
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-      return throwError('Сталася помилка. Перезавантажте сайт');
-    } else {
-      switch (error.status) {
-        case 404:
-          return throwError('Сталася помилка. Файл не знайдено');
-        case 401:
-          console.error('unauthorized access exception: ', error.message);
-          return throwError('Authorization error. Try again');
-        default:
-          return throwError('Сталася помилка. Перезавантажте сайт');
-      }
-    }
-  }
-
   getProducts(): Observable<HttpResponse<ProductForCartModel[]>> {
     if (this.tokenStorageService.isAuthorised()) {
-      return this.http
-        .get<ProductForCartModel[]>(this.getCartUrl, this.httpOptions)
-        .pipe(catchError(this.handleError));
+      return this.http.get<ProductForCartModel[]>(
+        this.getCartUrl,
+        this.httpOptions
+      );
     } else {
       const unauthorizedCart = this.getUnauthorizedCart();
-      return this.http
-        .post<ProductForCartModel[]>(
-          this.getUnauthorizedCartUrl,
-          unauthorizedCart,
-          this.httpOptions
-        )
-        .pipe(catchError(this.handleError));
+      return this.http.post<ProductForCartModel[]>(
+        this.getUnauthorizedCartUrl,
+        unauthorizedCart,
+        this.httpOptions
+      );
     }
   }
 
   addProductToCart(data: EditCartModel): Observable<HttpResponse<any>> {
-    return this.http
-      .post<any>(this.addProductUrl, data, this.httpOptions)
-      .pipe(catchError(this.handleError));
+    return this.http.post<any>(this.addProductUrl, data, this.httpOptions);
   }
 
   removeProductFromCart(data: EditCartModel): Observable<HttpResponse<any>> {
-    return this.http
-      .post<any>(this.removeProductUrl, data, this.httpOptions)
-      .pipe(catchError(this.handleError));
+    return this.http.post<any>(this.removeProductUrl, data, this.httpOptions);
   }
 
   checkProduct(data: EditCartModel): Observable<HttpResponse<any>> {
-    return this.http
-      .post(this.checkProductUrl, data, this.httpOptions)
-      .pipe(catchError(this.handleError));
+    return this.http.post(this.checkProductUrl, data, this.httpOptions);
   }
 
   addProductToUnauthorizedCart(productToAdd: EditCartModel): void {

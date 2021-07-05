@@ -41,7 +41,6 @@ export class ShoppingCartComponent implements OnInit {
       (response) => {
         this.products = response.body!;
         this.isProductsLoaded = true;
-        console.log('Cart: data loaded');
         this.overallPrice = this.cartService.countTotalPrice(this.products);
       },
       (error) => {
@@ -62,14 +61,44 @@ export class ShoppingCartComponent implements OnInit {
     } as EditCartModel;
 
     if (this.cartService.isAuthorised()) {
-      this.cartService.addProductToCart(productToAdd).subscribe(() => {
-        this.loadData();
-      });
+      this.cartService.addProductToCart(productToAdd).subscribe(
+        () => {
+          this.loadData();
+        },
+        (error) => {
+          if (error.status == 404) {
+            this.dialogService.openMessage(
+              'Product is not available anymore. Try again later',
+              ' Close '
+            );
+          } else {
+            this.dialogService.openMessage(
+              'Something went wrong. Try again later',
+              ' Close '
+            );
+          }
+        }
+      );
     } else {
-      this.cartService.checkProduct(productToAdd).subscribe((response) => {
-        this.cartService.addProductToUnauthorizedCart(productToAdd);
-        this.loadData();
-      });
+      this.cartService.checkProduct(productToAdd).subscribe(
+        () => {
+          this.cartService.addProductToUnauthorizedCart(productToAdd);
+          this.loadData();
+        },
+        (error) => {
+          if (error.status == 403) {
+            this.dialogService.openMessage(
+              'Product is not available anymore. Try again later',
+              ' Close '
+            );
+          } else {
+            this.dialogService.openMessage(
+              'Something went wrong. Try again later',
+              ' Close '
+            );
+          }
+        }
+      );
     }
   }
 
@@ -81,11 +110,17 @@ export class ShoppingCartComponent implements OnInit {
     } as EditCartModel;
 
     if (this.cartService.isAuthorised()) {
-      this.cartService
-        .removeProductFromCart(productToSubstract)
-        .subscribe((response) => {
+      this.cartService.removeProductFromCart(productToSubstract).subscribe(
+        () => {
           this.loadData();
-        });
+        },
+        () => {
+          this.dialogService.openMessage(
+            'Something went wrong. Try again later',
+            ' Close '
+          );
+        }
+      );
     } else {
       const productToCheck = {
         productId: product.id,
@@ -93,10 +128,27 @@ export class ShoppingCartComponent implements OnInit {
         amount: product.amount - 1,
       } as EditCartModel;
 
-      this.cartService.checkProduct(productToCheck).subscribe(() => {
-        this.cartService.removeProductFromUnauthorizedCart(productToSubstract);
-        this.loadData();
-      });
+      this.cartService.checkProduct(productToCheck).subscribe(
+        () => {
+          this.cartService.removeProductFromUnauthorizedCart(
+            productToSubstract
+          );
+          this.loadData();
+        },
+        (error) => {
+          if (error.status == 403) {
+            this.dialogService.openMessage(
+              'Product is not available anymore. Try again later',
+              ' Close '
+            );
+          } else {
+            this.dialogService.openMessage(
+              'Something went wrong. Try again later',
+              ' Close '
+            );
+          }
+        }
+      );
     }
   }
 

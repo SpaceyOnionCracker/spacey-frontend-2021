@@ -53,8 +53,13 @@
   margin-bottom: 1%;
 }
 
+.order-btn {
+  margin-left: 70%;
+  width: 10%;
+}
+
 .logout-btn {
-  margin-left: 85%;
+  margin-left: 5%;
   width: 10%;
 }
 

@@ -30,6 +30,7 @@ export class AuthService {
   isCourier = false;
   isAuthorizedUser = false;
   isProductManager = false;
+  isAdmin = false;
 
   constructor(
     private http: HttpClient,
@@ -43,6 +44,7 @@ export class AuthService {
     this.isCourier = false;
     this.isAuthorizedUser = false;
     this.isProductManager = false;
+    this.isAdmin = true;
   }
 
   isAuthorised(): boolean {
@@ -85,6 +87,9 @@ export class AuthService {
         this.isProductManager = true;
         this.isUnauthorizedUser = false;
         break;
+      case 'ADMIN':
+        this.isAdmin = true;
+        this.isUnauthorizedUser = false;
     }
   }
 

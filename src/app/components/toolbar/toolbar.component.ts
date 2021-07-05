@@ -57,4 +57,8 @@ export class ToolbarComponent {
   routeToCustomization() {
     this.router.navigateByUrl(routeUrls.customization);
   }
+
+  routeToManageEmployees() {
+    this.router.navigateByUrl(routeUrls.adminEmployee);
+  }
 }

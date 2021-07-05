@@ -1,6 +1,14 @@
 <div class="logout-div">
   <button
     mat-raised-button
+    class="order-btn"
+    (click)="toOrderHistory()"
+    color="accent"
+  >
+    Log out
+  </button>
+  <button
+    mat-raised-button
     class="logout-btn"
     (click)="logout()"
     color="accent"

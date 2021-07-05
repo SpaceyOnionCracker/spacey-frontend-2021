@@ -104,6 +104,10 @@ export class UserProfileComponent implements OnInit {
     this.router.navigateByUrl(routeUrls.login);
   }
 
+  toOrderHistory() {
+    this.router.navigateByUrl(routeUrls.orderHistory);
+  }
+
   onSubmitProfile(): void {
     const editInfo = {
       firstName: this.profileForm.get('firstName')?.value,

@@ -16,11 +16,9 @@
     <mat-form-field class="timepicker-styles">
       <mat-label>Choose a time</mat-label>
       <mat-select>
-        <mat-option
-          *ngFor="let currentDate of dates"
-          value="{{ currentDate }}"
-          >{{ currentDate.date | date: "hh:mm" }}</mat-option
-        >
+        <mat-option *ngFor="let currentDate of dates" value="{{ currentDate }}">
+          {{ currentDate }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <div>

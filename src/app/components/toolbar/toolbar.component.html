@@ -21,7 +21,7 @@
     mat-flat-button
     color="primary"
     (click)="routeToAddProduct()"
-    *ngIf="isProductManager"
+    *ngIf="this.authService.isProductManager"
   >
     Add Product
   </button>
@@ -29,7 +29,7 @@
     mat-flat-button
     color="primary"
     (click)="routeToAddAuction()"
-    *ngIf="isProductManager"
+    *ngIf="this.authService.isProductManager"
   >
     Add Auction
   </button>
@@ -37,7 +37,7 @@
     mat-flat-button
     color="primary"
     (click)="routeToCourierOrders()"
-    *ngIf="isCourier"
+    *ngIf="this.authService.isCourier"
   >
     My Orders
   </button>
@@ -45,7 +45,9 @@
     mat-flat-button
     color="primary"
     routerLink="/comparison"
-    *ngIf="isUser || isAuthorizedUser"
+    *ngIf="
+      this.authService.isUnauthorizedUser || this.authService.isAuthorizedUser
+    "
   >
     Comparison
   </button>
@@ -53,7 +55,9 @@
     mat-flat-button
     color="primary"
     (click)="routeToAuctions()"
-    *ngIf="isAuthorizedUser || isProductManager"
+    *ngIf="
+      this.authService.isAuthorizedUser || this.authService.isProductManager
+    "
   >
     Auctions
   </button>
@@ -64,14 +68,16 @@
   <button
     mat-icon-button
     (click)="routeToCart()"
-    *ngIf="isUser || isAuthorizedUser"
+    *ngIf="
+      this.authService.isUnauthorizedUser || this.authService.isAuthorizedUser
+    "
   >
     <mat-icon>shopping_cart</mat-icon>
   </button>
   <button
     mat-icon-button
     (click)="routeToCustomization()"
-    *ngIf="isProductManager"
+    *ngIf="this.authService.isProductManager"
   >
     <mat-icon>settings</mat-icon>
   </button>

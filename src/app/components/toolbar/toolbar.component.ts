@@ -9,35 +9,8 @@ import { TokenStorageService } from '../../store/service/auth/token-storage.serv
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css'],
 })
-export class ToolbarComponent implements OnInit {
-  isUser = false;
-  isAuthorizedUser = false;
-  isCourier = false;
-  isProductManager = false;
-
-  constructor(
-    private router: Router,
-    public authService: AuthService,
-    private tokenStorageService: TokenStorageService
-  ) {}
-
-  getUserRole(): void {
-    const userRole = this.tokenStorageService.getRole();
-    switch (userRole) {
-      case null:
-        this.isUser = true;
-        break;
-      case 'USER':
-        this.isAuthorizedUser = true;
-        break;
-      case 'COURIER':
-        this.isCourier = true;
-        break;
-      case 'PRODUCT_MANAGER':
-        this.isProductManager = true;
-        break;
-    }
-  }
+export class ToolbarComponent {
+  constructor(private router: Router, public authService: AuthService) {}
 
   routeToCheckout() {
     this.router.navigateByUrl(routeUrls.checkout);
@@ -83,9 +56,5 @@ export class ToolbarComponent implements OnInit {
 
   routeToCustomization() {
     this.router.navigateByUrl(routeUrls.customization);
-  }
-
-  ngOnInit() {
-    this.getUserRole();
   }
 }

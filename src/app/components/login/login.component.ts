@@ -63,6 +63,7 @@ export class LoginComponent {
         const data = response.body;
         this.storageService.saveToken(data!.authToken);
         this.storageService.saveRole(data!.role);
+        this.messageService.setRole();
         this.router.navigateByUrl(routeUrls.profile);
       },
       (error) => {

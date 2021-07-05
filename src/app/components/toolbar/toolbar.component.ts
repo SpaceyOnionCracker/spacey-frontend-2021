@@ -9,11 +9,15 @@ import { TokenStorageService } from '../../store/service/auth/token-storage.serv
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css'],
 })
-export class ToolbarComponent {
+export class ToolbarComponent implements OnInit {
   constructor(private router: Router, public authService: AuthService) {}
 
   routeToCheckout() {
     this.router.navigateByUrl(routeUrls.checkout);
+  }
+
+  ngOnInit() {
+    this.authService.setRole();
   }
 
   routeToHomepage(sex: string) {
@@ -56,5 +60,9 @@ export class ToolbarComponent {
 
   routeToCustomization() {
     this.router.navigateByUrl(routeUrls.customization);
+  }
+
+  routeToManageEmployees() {
+    this.router.navigateByUrl(routeUrls.adminEmployee);
   }
 }

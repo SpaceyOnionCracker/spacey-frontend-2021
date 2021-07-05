@@ -39,10 +39,6 @@ export class ToolbarComponent implements OnInit {
     }
   }
 
-  routeToCheckout() {
-    this.router.navigateByUrl(routeUrls.checkout);
-  }
-
   routeToHomepage(sex: string) {
     this.router.navigate([routeUrls.homepage]);
   }

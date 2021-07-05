@@ -85,6 +85,7 @@ import { EmailForRecoverPassComponent } from './components/email-for-recover-pas
 import { CreatePasswordComponent } from './components/create-password/create-password.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
+import { FilterEmployeeComponent } from './components/filter-employee/filter-employee.component';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { AdminProfileComponent } from './components/admin-profile/admin-profile.
     EmailForRecoverPassComponent,
     CreatePasswordComponent,
     AdminProfileComponent,
+    FilterEmployeeComponent,
   ],
   imports: [
     BrowserModule,

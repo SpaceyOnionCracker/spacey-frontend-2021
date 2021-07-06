@@ -1,13 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ErrorStateMatcher } from '@angular/material/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-} from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../store/service/auth/auth.service';
 import { Router } from '@angular/router';
 import { LoginModel } from '../../store/models/login.model';

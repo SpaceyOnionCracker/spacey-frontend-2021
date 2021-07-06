@@ -61,7 +61,7 @@ export class AdminEditComponent implements OnInit {
     { id: 3, name: 'Inactive' },
     { id: 4, name: 'Active' },
     { id: 5, name: 'Terminated' },
-    ];
+  ];
 
   constructor(
     private formBuilder: FormBuilder,

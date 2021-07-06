@@ -56,10 +56,12 @@ export class AdminEditComponent implements OnInit {
   ];
 
   statuses: Statuses[] = [
-    { id: 1, name: 'Inactive' },
-    { id: 2, name: 'Active' },
-    { id: 3, name: 'Terminate' },
-  ];
+    { id: 1, name: 'Activated' },
+    { id: 2, name: 'Unactivated' },
+    { id: 3, name: 'Inactive' },
+    { id: 4, name: 'Active' },
+    { id: 5, name: 'Terminated' },
+    ];
 
   constructor(
     private formBuilder: FormBuilder,

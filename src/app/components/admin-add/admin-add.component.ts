@@ -11,8 +11,6 @@ import { EmployeeService } from '../../store/service/employee/employee.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AddEmployeeModel } from '../../store/models/AddEmployeeModel';
 import { Router } from '@angular/router';
-import { RoleModel } from '../../store/models/role.model';
-import { StatusModel } from '../../store/models/user-status.model';
 import { ErrorPageService } from '../../store/service/error/error-page.service';
 import { DialogService } from '../../store/service/dialog/dialog.service';
 import { TokenStorageService } from '../../store/service/auth/token-storage.service';
@@ -56,9 +54,11 @@ export class AdminAddComponent implements OnInit {
   ];
 
   statuses: Statuses[] = [
-    { id: 1, name: 'Inactive' },
-    { id: 2, name: 'Active' },
-    { id: 3, name: 'Terminate' },
+    { id: 1, name: 'Activated' },
+    { id: 2, name: 'Unactivated' },
+    { id: 3, name: 'Inactive' },
+    { id: 4, name: 'Active' },
+    { id: 5, name: 'Terminated' },
   ];
 
   constructor(
